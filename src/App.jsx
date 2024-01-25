@@ -1,3 +1,5 @@
+import Error from "./components/Error";
+import FinishScreen from "./components/FinishScreen";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Main from "./components/Main";
@@ -12,14 +14,8 @@ function App() {
     <div className="px-2 py-20">
       <Header />
       <Main>
-        {/* <Start /> */}
-        <Progress />
-        <Question />
+        <Start />
       </Main>
-      <Footer>
-        <Timer />
-        <NextButton />
-      </Footer>
     </div>
   );
 }
