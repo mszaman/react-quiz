@@ -5,5 +5,22 @@
 @tailwind utilities;
 
 body {
-  @apply bg-ash-deep text-ash-light min-h-screen;
+  @apply min-h-screen bg-ash-deep text-ash-light;
+}
+
+progress {
+  -webkit-appearance: none;
+  @apply h-3 w-full rounded-full bg-ash-medium;
+}
+
+::-webkit-progress-bar {
+  @apply rounded-full bg-ash-medium;
+}
+
+::-webkit-progress-value {
+  @apply rounded-full bg-theme;
+}
+
+::-moz-progress-bar {
+  @apply rounded-full bg-theme;
 }
