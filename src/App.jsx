@@ -12,6 +12,8 @@ import NextButton from "./components/NextButton";
 import Timer from "./components/Timer";
 import Loader from "./components/Loader";
 
+const SECONDS_PER_QUESTION = 1;
+
 const initialState = {
   questions: [],
 
@@ -21,6 +23,7 @@ const initialState = {
   answer: null,
   points: 0,
   highScore: 0,
+  remainingSeconds: null,
 };
 
 function reducer(state, action) {
@@ -30,7 +33,11 @@ function reducer(state, action) {
     case "dataFailed":
       return { ...state, status: "error" };
     case "start":
-      return { ...state, status: "active" };
+      return {
+        ...state,
+        status: "active",
+        remainingSeconds: state.questions.length * SECONDS_PER_QUESTION,
+      };
     case "newAnswer":
       const question = state.questions.at(state.index);
       return {
@@ -54,6 +61,12 @@ function reducer(state, action) {
         highScore:
           state.points >= state.highScore ? state.points : state.highScore,
       };
+    case "timer":
+      return {
+        ...state,
+        remainingSeconds: state.remainingSeconds - 1,
+        status: state.remainingSeconds === 0 ? "finished" : state.status,
+      };
     case "restart":
       return {
         ...initialState,
@@ -68,8 +81,10 @@ function reducer(state, action) {
 }
 
 function App() {
-  const [{ questions, status, index, answer, points, highScore }, dispatch] =
-    useReducer(reducer, initialState);
+  const [
+    { questions, status, index, answer, points, highScore, remainingSeconds },
+    dispatch,
+  ] = useReducer(reducer, initialState);
 
   const numOfQuestions = questions.length;
   const highestPossiblePoints = questions.reduce(
@@ -106,6 +121,15 @@ function App() {
               dispatch={dispatch}
               answer={answer}
             />
+            <Footer>
+              <Timer remainingSeconds={remainingSeconds} dispatch={dispatch} />
+              <NextButton
+                answer={answer}
+                dispatch={dispatch}
+                index={index}
+                numOfQuestions={numOfQuestions}
+              />
+            </Footer>
           </>
         )}
         {status === "finished" && (
@@ -117,17 +141,6 @@ function App() {
           />
         )}
       </Main>
-      {status === "active" && (
-        <Footer>
-          <Timer />
-          <NextButton
-            answer={answer}
-            dispatch={dispatch}
-            index={index}
-            numOfQuestions={numOfQuestions}
-          />
-        </Footer>
-      )}
     </div>
   );
 }
