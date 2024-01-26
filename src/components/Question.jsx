@@ -1,13 +1,13 @@
 import Option from "./Option";
 
-export default function Question() {
+export default function Question({ question, dispatch, answer }) {
   return (
     <>
       <div className="flex flex-col items-center">
         <h3 className="mb-5 text-center font-nunito text-xl font-semibold">
-          Which is the most popular JavaScript Framework?
+          {question.question}
         </h3>
-        <Option />
+        <Option question={question} dispatch={dispatch} answer={answer} />
       </div>
     </>
   );

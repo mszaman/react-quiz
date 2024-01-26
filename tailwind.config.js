@@ -18,6 +18,9 @@ export default {
         theme: "#1098ad",
         accent: "#ffa94d",
       },
+      animation: {
+        "spin-fast": "spin 0.5s linear infinite",
+      },
     },
     screens: {
       md: "700px",

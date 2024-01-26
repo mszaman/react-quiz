@@ -1,18 +1,24 @@
-export default function Progress() {
+export default function Progress({
+  points,
+  index,
+  numOfQuestions,
+  answer,
+  highestPossiblePoints,
+}) {
   return (
     <>
       <section className="mb-10 flex flex-col gap-3 text-ash-medium">
         <progress
           // className="w-full rounded-full bg-ash-medium text-theme"
-          max="15"
-          value="5"
+          max={numOfQuestions}
+          value={index + Number(answer !== null)}
         />
         <div className="flex justify-between text-ash-medium">
           <p className="font-medium">
-            <strong>1</strong>/15
+            <strong>{index + 1}</strong>/{numOfQuestions}
           </p>
           <p className="font-medium">
-            <strong>0</strong>/280
+            <strong>{points}</strong>/{highestPossiblePoints}
           </p>
         </div>
       </section>
